@@ -17,10 +17,20 @@ class ApiError extends Error {
       if (stack) {
         this.stack = stack;
       } else {
-        Error.captureStackTrace(tis, this.constructor);
+        Error.captureStackTrace(this, this.constructor);
       }
     }
   }
 }
 
-export { ApiError };
+
+const ErrorMiddleware = (err, req, res, next) => {
+  err.message || (err.message = "Internal server error");
+  err.statusCode || (err.statusCode = 500);
+  return res.status(err.statusCode).json({
+    success: false,
+    message: err.message,
+  });
+};
+
+export { ApiError, ErrorMiddleware };

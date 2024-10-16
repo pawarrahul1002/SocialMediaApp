@@ -13,7 +13,7 @@ export const registerUser = asyncHandler(async (req, res, next) => {
   // upload photos on cloudinary
   // create user object and add it in db
   // remove password and refresh token from field and return user
-
+  console.log('Body:', req.body);
   const { fullName, email, username, password } = req.body;
   console.log("email: ", email);
   console.log("password : ", password);
@@ -78,3 +78,5 @@ export const registerUser = asyncHandler(async (req, res, next) => {
     .status(201)
     .json(new ApiResponse(200, createdUser, "User registered Successfully"));
 });
+
+
